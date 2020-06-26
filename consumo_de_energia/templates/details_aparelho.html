@@ -1,0 +1,46 @@
+% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="container2">
+            <h1>Detalhe Aparelho</h1>
+        </div>
+        <div class="container2">
+            <div class="modal-body">
+
+                <div class="">
+                    Aparelho:
+                    {{ aparelho.name }}
+                </div>
+                <div class="">
+                    Potencia em Watts:
+                    {{ aparelho.potencia }}
+                </div>
+                <div class="">
+                    Tempo de uso:
+                    {{ aparelho.tempo }}
+                    {% if aparelho.status == 1 %} 
+                        
+                        Minuto{{ aparelho.tempo|pluralize }}
+                        
+                    {% else %}
+                         
+                        Hora{{ aparelho.tempo|pluralize }}
+
+                    {% endif %}
+                </div>
+                <div class="">
+                    Data do cadastro:
+                    {{ aparelho.created_at }}
+                </div>
+                <div class="">
+                    <a class="pure-button pure-button-primary" style="text-decoration:none;" href="{% url 'consumo:list_Aparelho' %}">
+                        Voltar
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}

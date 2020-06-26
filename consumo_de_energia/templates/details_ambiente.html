@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+  <strong><h1>Lista de Ambientes</h1></strong>
+  <div style="padding:10px; margin:10px">
+      <table class="pure-table pure-table-striped">
+        <thead>
+          <tr>
+          
+          <th>Nome do ambiente</th>
+          <!--<th>Potência</th>
+          <th>Tempo</th>-->
+          <th>Ação</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ambiente in ambientes %}
+        <tr>
+          <td><a href="{{ ambiente.get_absolute_url }}"> {{ ambiente.name }} </a></td>
+          <td>
+            <div clas="pure-button-group" role="group">
+              <a class="pure-button" href="{% url 'consumo:edit_ambiente' ambiente.slug %}"><i class="fas fa-edit"></i></a>
+              <a class="pure-button" href=""><i class="fas fa-trash"></i></a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <div class="pure-g-r content-ribbon">
+            <div class="pure-u-1">
+                <div class="l-box">
+                    <p>Nenhum ambiente está disponível.</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock%}

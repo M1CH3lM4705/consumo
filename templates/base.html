@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome.css' %}" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}" />
+    
+    
+    <title>Consumo de Energia</title>
+</head>
+<body>
+    <header class=header-menu>
+        <div class="header">
+            <div class="logo">
+                <a href="{% url 'core:home' %}">
+                    <img class="pure-img" src="{% static './img/new_logo.png' %}"/>
+                </a>
+            </div>
+            <div class="menu">
+                <nav>
+                    <img class="pure-img" src="{% static './img/logo-uniron.png' %}"/>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- -->
+    {% if messages %}
+    <div class="pure-g-r content-ribbon">
+        <aside class="pure-u-1">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </aside>
+    </div>  
+    {% endif %}
+    <!-- -->
+    {% block content %}
+    {% endblock %}
+<footer>
+    <div class="footer-area">
+        <div class="pure-g-r ">
+            Copyright - Todos os direitos reservados 
+        </div> 
+    </div>
+    <div class="footer-center"><p>Integrantes do projeto:</p></div>
+    <div class="footer-div">
+        <div><p>Eduardo Antonio</p></div>
+        <div><p>Jeú Silva</p></div>
+        <div><p>Michel Matos</p></div>
+        <div><p>Wesley Alves</p></div>
+    </div>   
+</footer>
+<!-- javascript -->
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
+    
+    <!-- custom javascript -->
+  <script type="text/javascript" src="{% static 'js/slick.min.js' %}"></script>
+  <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
+  <script type="text/javascript">
+    $(function() {
+
+        $(".save-app").modalForm({
+            modalID: "#modal-app",
+            formURL: "{% url 'consumo:add_app_modal' %}"
+        });
+            // Update book buttons
+        $(".update-app-amb").each(function () {
+            $(this).modalForm({
+                modalID: "#modal-crud",
+                formURL: $(this).data('id')
+                });
+        });
+
+        // Delete book buttons
+        $(".delete-app-amb").each(function () {
+            $(this).modalForm({
+                modalID: "#modal-crud",
+                formURL: $(this).data('id')
+                });
+        });
+
+        // hide message
+      $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+        $(".alert").slideUp(500);
+      });
+
+      // autofocus to first input field of a modal
+      $('.modal').on('shown.bs.modal', function () {
+        $('form').find('input[type=text]').filter(':visible:first').focus();
+      });
+
+
+      //slick-slide
+        $('.slider-app').slick({
+            infinite: true,
+            slidesToShow: 1,
+            speed:300,
+        });
+
+    });
+  </script>
+</body>
+</html>

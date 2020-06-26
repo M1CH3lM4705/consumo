@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+<form class="pure-form pure-form-aligned" style="margin: 10px;" method="post">
+    {% csrf_token %}
+    <fieldset>
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+        <div class="pure-control-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+
+        <div class="pure-controls">
+            <button type="submit" class="pure-button pure-button-primary">Salvar</button>
+            {% if ambientes %}
+            <a class="pure-button pure-button-primary" style="text-decoration:none;" href="{% url 'consumo:ambientes_apps_list' ambientes.slug %}">Voltar</a>
+            {% endif %}
+        </div>
+    </fieldset>
+</form>
+<br/><br/>
+{% if ambientes %}
+<button class="save-app btn btn-primary" type="button" name="button">Inserir Aparelho</button>
+{% endif %}
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-app">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    {% block model %}
+      
+    {% endblock model %}
+    </div>
+  </div>
+</div>
+
+<!-- Create book button -->
+
+
+{% endblock %}

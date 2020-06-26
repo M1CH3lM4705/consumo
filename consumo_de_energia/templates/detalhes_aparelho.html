@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="container2">
+            <h1>{{ ambientes.name }}</h1>
+        </div>
+        <div class="container2">
+            <div>
+                <p>Inserir aparelho no ambiente<p/>
+                <a class="btn btn-primary" href="{% url 'consumo:ambientes_apps_insert' ambientes.slug %}">Inserir</a>
+            </div>
+        </div>
+        <ul style="display:none;">
+        <div class="slider-app">
+            <div>
+                {% for aparelho in aparelhos %}
+                <div style="width:128px;">
+                    <li>
+                        <div>
+                            <span class="boxlegend">{{ aparelho.name }}</span>
+                        </div>
+                    </li>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        </ul>
+        {% if aparelhos %}        
+        <table class="pure-table pure-table-striped" style="width:944px; margin-bottom:20px;">
+            <tr>
+                <th>Quantidade</th>
+                <th>Descrição</th>
+                <th>Uso diário</th>
+                <th>KWh/Mês</th>
+                <th>Custo Mês</th>
+                <th>Acão</th>
+            </tr>
+            {% for aparelho in aparelhos %}
+            <tr class="pure-table-odd">
+                <td>{{ aparelho.quantidade }}</td>
+                <td>{{ aparelho.name }}</td>
+                <td>
+                    {{ aparelho.tempo }}
+                    {% if aparelho.status == 1 %} 
+                        
+                        Minuto{{ aparelho.tempo|pluralize }}
+                        
+                    {% else %}
+                         
+                        Hora{{ aparelho.tempo|pluralize }}
+
+                    {% endif %}
+                </td>
+                <td>{{ aparelho.calculoKw }}</td>
+                <td>R$ {{ aparelho.tarifa }}</td>
+                <td>
+                    <button type="button" class="update-app-amb btn btn-sm btn-primary" style="min-width:10px;" 
+                    data-id="{% url 'consumo:edit_modal_aparelho' aparelho.slug %}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <!-- Delete buttons -->
+                    <button type="button" class="delete-app-amb btn btn-sm btn-danger" style="min-width:10px;"  
+                    data-id="{% url 'consumo:del_app_modal' pk=aparelho.pk slug=ambientes.slug %}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            {% empty %}
+            <div class="pure-g-r content-ribbon">
+                <div class="pure-u-1">
+                    <div class="l-box">
+                        <p>Nenhum aparelho neste ambiente está disponível!</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </table>
+        {% else %}
+        <p>Nenhum aparelho na lista.</p>
+        {% endif %}
+        <div class="container3">
+            <h1><strong>Total Estimado do Cômodo</strong></h1>
+            <div class="info">
+                <div>
+                    <p>Consumo<p>
+                    <div>
+                        <h2>{{ total }} KWh</h2>
+                    </div>
+                </div>
+                    <div>
+                        <p>Custo</p>
+                        <div>
+                            <h2>R$ {{ tarifa }}</h2>
+                        </div>
+                    </div>
+                <div>
+                    <p>Tarifa<p>
+                    <div>
+                        <h2>R$ 0,733363</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal-crud">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+{% endblock %}

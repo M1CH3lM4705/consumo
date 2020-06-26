@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+  <strong><h1>Lista de Aparelhos</h1></strong>
+  <div style="padding:10px; margin:10px">
+      <table class="pure-table pure-table-striped">
+        <thead>
+          <tr>
+          
+          <th>Nome do Aparelho</th>
+          <!--<th>Potência</th>
+          <th>Tempo</th>-->
+          <th>Ação</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for aparelho in aparelhos %}
+        <tr>
+          <td><a href="{{ aparelho.get_absolute_url }}"> {{ aparelho.name }} </a></td>
+          <td>
+            <div clas="pure-button-group" role="group">
+              <a class="pure-button" href="{% url 'consumo:edit_aparelho' aparelho.slug %}"><i class="fas fa-edit"></i></a>
+              <a class="pure-button" href=""><i class="fas fa-trash"></i></a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <div class="pure-g-r content-ribbon">
+            <div class="pure-u-1">
+                <div class="l-box">
+                    <p>Nenhum aparelho está disponível.</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+<!--Lembrar de criar um modal pra mostrar o detalhe do aparelho-->
+{% endblock%}
