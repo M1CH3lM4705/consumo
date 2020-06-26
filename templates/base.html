@@ -31,7 +31,7 @@
     </header>
     <!-- -->
     {% if messages %}
-    <div class="pure-g-r content-ribbon">
+    <div class="pure-g-r content-ribbon" style="width:100%; height:100px;background-coloar:#00FF00">
         <aside class="pure-u-1">
             {% for message in messages %}
             <p>{{ message }}</p>
@@ -50,10 +50,10 @@
     </div>
     <div class="footer-center"><p>Integrantes do projeto:</p></div>
     <div class="footer-div">
-        <div><p>Eduardo Antonio</p></div>
-        <div><p>Jeú Silva</p></div>
-        <div><p>Michel Matos</p></div>
-        <div><p>Wesley Alves</p></div>
+        <div><p><b>Eduardo Antonio<b></p></div>
+        <div><p><b>Jeú Silva<b></p></div>
+        <div><p><b>Michel Matos<b></p></div>
+        <div><p><b>Wesley Alves<b></p></div>
     </div>   
 </footer>
 <!-- javascript -->
@@ -73,6 +73,12 @@
         $(".save-app").modalForm({
             modalID: "#modal-app",
             formURL: "{% url 'consumo:add_app_modal' %}"
+        });
+        $(".read-app").each(function () {
+            $(this).modalForm({
+                modalID: "#modal-crud",
+                formURL: $(this).data('id')
+                });
         });
             // Update book buttons
         $(".update-app-amb").each(function () {

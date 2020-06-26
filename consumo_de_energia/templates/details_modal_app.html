@@ -1,0 +1,46 @@
+{% load widget_tweaks %}
+
+<div class="modal-header">
+  <h3 class="modal-title">Aparelho detalhes</h3>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+<div class="">
+    Aparelho:
+    {{ aparelho.name }}
+</div>
+<div class="">
+    Potencia em Watts:
+    {{ aparelho.potencia }}
+</div>
+<div class="">
+    Tempo de uso:
+    {{ aparelho.tempo }}
+    {% if aparelho.status == 1 %} 
+        
+        Minuto{{ aparelho.tempo|pluralize }}
+        
+    {% else %}
+            
+        Hora{{ aparelho.tempo|pluralize }}
+
+    {% endif %}
+</div>
+<div class="">
+    Data do cadastro:
+    {{ aparelho.created_at }}
+</div>
+<div class="">
+    <!--<a class="pure-button pure-button-primary" style="text-decoration:none;" href="{% url 'consumo:list_aparelho' %}">
+        Voltar
+    </a>-->
+    
+</div>
+</div>
+<div class="modal-footer">
+    <a href="{% url 'consumo:list_aparelho' %}" class="btn btn-default" data-dismiss="">Listar Aparelhos</a>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+</div>

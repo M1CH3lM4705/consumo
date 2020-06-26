@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid">
-  <strong><h1>Lista de Ambientes</h1></strong>
+<div class="container">
+  <strong><h1 style="margin-left:15px;">Lista de Ambientes</h1></strong>
   <div style="padding:10px; margin:10px">
+      <a class="btn btn-primary" href="{% url 'consumo:add_ambiente' %}">Inserir ambiente</a>
       <table class="pure-table pure-table-striped">
         <thead>
           <tr>
@@ -21,14 +22,14 @@
           <td>
             <div clas="pure-button-group" role="group">
               <a class="pure-button" href="{% url 'consumo:edit_ambiente' ambiente.slug %}"><i class="fas fa-edit"></i></a>
-              <a class="pure-button" href=""><i class="fas fa-trash"></i></a>
+              <a class="pure-button" href="{% url 'consumo:delete_ambiente' ambiente.slug %}"><i class="fas fa-trash"></i></a>
             </div>
           </td>
         </tr>
         {% empty %}
         <div class="pure-g-r content-ribbon">
             <div class="pure-u-1">
-                <div class="l-box">
+                <div class="l-box" style="padding-top:10px;">
                     <p>Nenhum ambiente está disponível.</p>
                 </div>
             </div>

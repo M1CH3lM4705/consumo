@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid">
-  <strong><h1>Lista de Aparelhos</h1></strong>
+<div class="container">
+  <strong><h1 style="margin-left:16px;">Lista de Aparelhos</h1></strong>
   <div style="padding:10px; margin:10px">
-      <table class="pure-table pure-table-striped">
+      <a class="btn btn-primary" href="{% url 'consumo:add_aparelho' %}">Inserir aparelho</a>
+      <table class="pure-table pure-table-striped" style="margin-top:10px;">
         <thead>
           <tr>
           
@@ -21,7 +22,7 @@
           <td>
             <div clas="pure-button-group" role="group">
               <a class="pure-button" href="{% url 'consumo:edit_aparelho' aparelho.slug %}"><i class="fas fa-edit"></i></a>
-              <a class="pure-button" href=""><i class="fas fa-trash"></i></a>
+              <a class="pure-button" href="{% url 'consumo:delete_aparelho' aparelho.slug %}"><i class="fas fa-trash"></i></a>
             </div>
           </td>
         </tr>

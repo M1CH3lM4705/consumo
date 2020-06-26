@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
+from django.db.models import signals
+from Consumo2.utils import slug_pre_save
 
 # Create your models here.
 
@@ -43,12 +45,12 @@ class Aparelho(models.Model):
             time = self.tempo / 60
             consumo = pot * time
             print(consumo)
-            return f'{consumo:.2f}'
+            return f'{consumo:.2f}'.replace('.',',')
         else:
             pot = (self.quantidade * self.potencia) / 1000
             consumo = pot * self.tempo
             print(consumo)
-            return f'{consumo:.2f}'
+            return f'{consumo:.2f}'.replace('.',',')
     
     
     def tarifa(self):
@@ -69,12 +71,13 @@ class Aparelho(models.Model):
             return f'{consumo:.2f}'.replace('.',',')
 
     def get_absolute_url(self):
-        return reverse('consumo:ambientes_apps_list', kwargs={'slug' : self.slug})
-
+        return reverse('consumo:detail_app', kwargs={'slug' : self.slug})
+    '''
     def save(self, *args, **kwargs):
         value = self.name
-        self.slug = slugify(value, allow_unicode=True)
+        self.slug = slugify(value, allow_unicode=True).replace("'","")
         super().save(*args, **kwargs)
+    '''
 
     class Meta:
         db_table = 'aparelho'
@@ -101,10 +104,12 @@ class Ambiente(models.Model):
     def get_absolute_url(self):
         return reverse('consumo:ambientes_apps_list', kwargs={'slug' : self.slug})
     
+    '''
     def save(self, *args, **kwargs):
         value = self.name
         self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
+    '''
     
     class Meta:
         db_table = 'ambiente'
@@ -113,4 +118,5 @@ class Ambiente(models.Model):
         ordering = ['name']
 
 
-
+signals.pre_save.connect(slug_pre_save, sender=Aparelho)
+signals.pre_save.connect(slug_pre_save, sender=Ambiente)
