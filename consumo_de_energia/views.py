@@ -199,8 +199,7 @@ def list_ambiente_aparelho(request, slug):
     qnt = 0
     kwh = []
     time = 0
-    hora = 0
-    min = 0
+    #loop para converter a o potencia em Kwh e adicionando em uma lista
     for aparelho in aparelhos:
         qnt += aparelho.quantidade
         if aparelho.status == 1:
@@ -209,11 +208,9 @@ def list_ambiente_aparelho(request, slug):
         else:
            kwh.append((aparelho.potencia * aparelho.tempo) / 1000)
     print(kwh)
-    #print(pot)
-    time = hora + min
-    #print(time)
-    #sub_total = (qnt * pot * time)/1000
-    total = sum(kwh) * 30
+
+
+    total = sum(kwh) * 30#calculo da soma dos kwh vezes o consumo mensal
     tarifa = total * 0.733363
     context = {
         'aparelhos':aparelhos,
