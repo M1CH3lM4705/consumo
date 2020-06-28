@@ -35,20 +35,18 @@ class Aparelho(models.Model):
     def __str__(self):
         return self.name
         
-    @property
     def calculoKw(self):
         pot = 0
         time = 0
         consumo = 0
         if self.status == 1:
-            pot = (self.quantidade * self.potencia) / 1000
             time = self.tempo / 60
-            consumo = pot * time
+            #print(time)
+            consumo = (self.quantidade * self.potencia * time) / 1000
             print(consumo)
             return f'{consumo:.2f}'.replace('.',',')
         else:
-            pot = (self.quantidade * self.potencia) / 1000
-            consumo = pot * self.tempo
+            consumo = (self.quantidade * self.potencia * self.tempo) / 1000
             print(consumo)
             return f'{consumo:.2f}'.replace('.',',')
     
@@ -58,20 +56,21 @@ class Aparelho(models.Model):
         time = 0
         consumo = 0
         if self.status == 1:
-            pot = (self.quantidade * self.potencia) / 1000
             time = self.tempo / 60
-            consumo = pot * time * 0.733363
-            print(consumo)
+            pot = (self.quantidade * self.potencia * time) / 1000
+            consumo = pot * 0.733363
+            #print(consumo)
             return f'{consumo:.2f}'.replace('.',',')
         else:
-            pot = (self.quantidade * self.potencia) / 1000
-            consumo = pot * self.tempo * 0.733363
+            pot = (self.quantidade * self.potencia * self.tempo) / 1000
+            consumo = pot * 0.733363
 
-            print(consumo)
+            #print(consumo)
             return f'{consumo:.2f}'.replace('.',',')
 
     def get_absolute_url(self):
         return reverse('consumo:detail_app', kwargs={'slug' : self.slug})
+
     '''
     def save(self, *args, **kwargs):
         value = self.name

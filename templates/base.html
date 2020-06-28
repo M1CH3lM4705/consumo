@@ -33,9 +33,13 @@
     {% if messages %}
     <div class="pure-g-r content-ribbon" style="width:100%; height:100px;background-coloar:#00FF00">
         <aside class="pure-u-1">
-            {% for message in messages %}
-            <p>{{ message }}</p>
-            {% endfor %}
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
         </aside>
     </div>  
     {% endif %}

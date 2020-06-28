@@ -145,7 +145,7 @@ def delete_ambiente(request, slug):
     messages.success(request, 'Ambiente apagado com sucesso!')
     return redirect('consumo:list_ambiente')
 
-def delete_app_ambiente(request, pk, slug, ):
+def delete_app_ambiente(request, pk, slug, ):   
     template_name = 'delete_app_ambiente.html'
     context ={}
     app = get_object_or_404(Aparelho, pk=pk)
@@ -197,29 +197,27 @@ def list_ambiente_aparelho(request, slug):
     aparelhos = Aparelho.objects.prefetch_related('aparelhos_no_ambiente'
     ).filter(aparelhos_no_ambiente__slug=slug)
     qnt = 0
-    pot = 0
+    kwh = []
     time = 0
     hora = 0
     min = 0
     for aparelho in aparelhos:
         qnt += aparelho.quantidade
-        pot += aparelho.potencia
         if aparelho.status == 1:
-            min += aparelho.tempo / 60
+            time = aparelho.tempo / 60
+            kwh.append((aparelho.potencia * time) / 1000)
         else:
-            hora += aparelho.tempo
-    print(qnt)
-    print(pot)
+           kwh.append((aparelho.potencia * aparelho.tempo) / 1000)
+    print(kwh)
+    #print(pot)
     time = hora + min
-    print(time)
-    potencia = (pot * time) / 1000
-    sub_total = (qnt * pot * time)/1000
-    total = (qnt * potencia * 30)
+    #print(time)
+    #sub_total = (qnt * pot * time)/1000
+    total = sum(kwh) * 30
     tarifa = total * 0.733363
     context = {
         'aparelhos':aparelhos,
         'ambientes':Ambiente.objects.get(slug=slug),
-        'sub_total':sub_total,
         'total':f'{total:.2f}'.replace('.', ','),
         'tarifa':f'{tarifa:.2f}'.replace('.', ',')
     }
